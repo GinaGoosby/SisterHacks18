@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat|Pacifico" rel="stylesheet">
+
+<div class="topnav">
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="http://sisterhacks.co/">Contact</a>
+</div>
+
+<style>
+
+h1 {
+        font-family: 'Pacifico', cursive;
+}
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+form.example input[type=submit] {
+    float: right;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.example button:hover {
+    background: #0b7dda;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+</style>
+</head>
+<body>
+
+<script>
+   
+  function querying() {
+  	let userInput = document.getElementById("search")
+    let url = 'https://api.asos.com/product/search/v1/?q=" + userInput + "&store=1&lang=en-GB&sizeschema=US&currency=USD&sort=priceasc&channel=mobile-app&offset=0&limit=10';
+    fetch(url)
+  	.then(function(response) {
+    	if(response.ok) {
+ 		   document.getElementById("demo").innerHTML = "something";
+       };
+     })
+  }
+
+
+</script>
+
+<center>
+<div style="height:233px;margin-top:300px">
+    <h1>Search Button</h1>
+
+    <p>What brands are you looking for?</p>
+    <form class="example" onsubmit="querying()">
+        <input type="text" placeholder="Search..." name="search" />
+        <input id="clickMe" value="Search..." type="submit" />
+    </form>
+    <p id="demo">okay</p>
+    
+</div>
+</center>
+
+</body>
+</html> 
