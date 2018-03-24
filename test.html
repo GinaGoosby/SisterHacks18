@@ -24,7 +24,7 @@ body {
     box-sizing: border-box;
 }
 
-form.example input[type=text] {
+input[type=text] {
     padding: 10px;
     font-size: 17px;
     border: 1px solid grey;
@@ -33,7 +33,7 @@ form.example input[type=text] {
     background: #f1f1f1;
 }
 
-form.example input[type=submit] {
+button {
     float: right;
     width: 20%;
     padding: 10px;
@@ -59,9 +59,10 @@ form.example::after {
 <body>
 
 <script>
+   document.getElementById("searcher").addEventListener("click", querying);
    
   function querying() {
-  	let userInput = document.getElementById("search")
+  	let userInput = document.getElementById("searcher").innerHTML();
     let url = 'https://api.asos.com/product/search/v1/?q=" + userInput + "&store=1&lang=en-GB&sizeschema=US&currency=USD&sort=priceasc&channel=mobile-app&offset=0&limit=10';
     fetch(url)
   	.then(function(response) {
@@ -79,9 +80,8 @@ form.example::after {
     <h1>Search Button</h1>
 
     <p>What brands are you looking for?</p>
-    <form class="example" onsubmit="querying()">
-        <input type="text" placeholder="Search..." name="search" />
-        <input id="clickMe" value="Search..." type="submit" />
+    <input type="text" placeholder="Search..." id="searcher" />
+    <button id="clickMe" value="Search..."> Search... </button>
     </form>
     <p id="demo">okay</p>
     
