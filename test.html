@@ -12,7 +12,37 @@
 </div>
 
 <style>
+ul {
+    display: flex;
+    list-style:none;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content:center;
+    flex-basis: 80%;
 
+    li {
+      flex-basis: 20%;
+      display:flex;
+	  width:75px;
+      flex-direction: column;
+      margin-bottom: 20px;
+      align-items:center;
+
+      span {
+        font-family: arial;
+        font-size: 14px;
+        color: #5a5a5a;
+        text-align: center;
+      }
+
+      img {
+        margin: 5px;
+        border-radius: 3px;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+      }
+    }
+  }
+  
 h1 {
         font-family: 'Pacifico', cursive;
 }
@@ -57,34 +87,61 @@ form.example::after {
 </style>
 </head>
 <body>
+    
 
-<script>
-   document.getElementById("searcher").addEventListener("click", querying);
-   
-  function querying() {
-  	let userInput = document.getElementById("searcher").innerHTML();
-    let url = 'https://api.asos.com/product/search/v1/?q=" + userInput + "&store=1&lang=en-GB&sizeschema=US&currency=USD&sort=priceasc&channel=mobile-app&offset=0&limit=10';
-    fetch(url)
-  	.then(function(response) {
-    	if(response.ok) {
- 		   document.getElementById("demo").innerHTML = "something";
-       };
-     })
-  }
-
-
-</script>
 
 <center>
 <div style="height:233px;margin-top:300px">
     <h1>Search Button</h1>
 
     <p>What brands are you looking for?</p>
-    <input type="text" placeholder="Search..." id="searcher" />
-    <button id="clickMe" value="Search..."> Search... </button>
-    </form>
-    <p id="demo">okay</p>
+    <input type="text" placeholder="Search..." id="searcher" value="">
+    <button id="clickMe" value="Search..." onclick="querying()"> Search... </button>
+
     
+    <ul id="demo"></ul>
+    
+ <script type="text/javascript">
+	
+	function createNode(element) {
+		return document.createElement(element);
+    }
+
+    function append(parent, el) {
+        return parent.appendChild(el);
+    }
+
+	const ul = document.getElementById('demo');
+ 
+	function querying() {
+		var apiKey = 'f27a2edae4800f74d15c2073e26b50c85817ae6bb20039387d78035044c3b5eb';
+		var userInput = document.getElementById('searcher').value;
+		var url = 'https://api.gilt.com/v1/products/?q=' + userInput + '&rows=10&apikey=' + apiKey;
+		
+		fetch(url)
+		.then((resp) => resp.json())
+		.then(function (forSale) {
+			let items = forSale.products;
+			return items.map(function (item) {
+				let li = createNode('li'),
+				    info = createNode('info'),
+					desc = createNode('desc'),
+				    price = createNode('price');
+			price.innerHTML = "$" + `${item.skus[0].sale_price}` + " ";
+			info.innerHTML = `${item.name}  (${item.brand})` + "\n";
+			desc.innerHTML = `${item.content.description}`;
+			append(li,price);
+			append(li,info);
+			append(li,desc);
+			append(ul,li);
+			})
+		})
+		.catch(function(error) {
+			console.log(JSON.stringify(error));
+		});
+	}
+  
+ </script>
 </div>
 </center>
 
